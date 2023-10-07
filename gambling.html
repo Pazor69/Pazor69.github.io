@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pl-Pl" data-bs-theme="dark">
+<head>
+  <title>BlackJack</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body id="aintNoWay">
+   
+    <main>
+        <nav class="vstack gap-2 col-lg-8 mx-auto" style="margin: 10px;">
+            <div class="btn-group" style="float:left;">
+                <button type="button"data-bs-toggle="tootlitp" id="Siano" title="Tyle zarobiles👏" class="btn btn-success col-5">Pieniadze: 0</button>
+                <button type="button" class="btn btn-secondary  col-2" data-bs-toggle="modal" data-bs-target="#Zasady">Zasady</button>
+                
+                <div class="btn-group col-5">
+                    
+                    <button type="button" class="btn btn-primary dropdown-toggle " id="Stawka" data-bs-toggle="dropdown">Stawka: 0</button>
+                    <div class="dropdown-menu dropdown-menu-end col-5">   
+                      <input type="number" placeholder="Ustaw stawke(min 10)"min="10"  max="" id="Postawione" class="dropdown-item "></input>
+                      <button onclick="Postaw()" id="conf" class="dropdown-item bg-success">Potwierdz</button>
+                      
+                    </div>
+                </div>
+              </div>
+              <div class="btn-group " style="float:left;">
+                <button type="button" onclick="superPomysl()" id="hit1" class="btn btn-success col-3 disabled">Hit</button>
+                <button type="button" onclick="Surrender()" id="Surr" class="btn btn-danger col-3 disabled">Surrender</button>
+                <button type="button" onclick="Stand()" id="Stand" class="btn btn-warning col-3 disabled">Stand</button>
+                
+              </div> 
+        </nav>
+        <article class="container col-lg-8 my-2">
+            <h1>
+                Karty Krupiera
+            </h1>
+            <div class="row gap-1 fade show"  id="KartyBot">
+            
+                    
+
+            </div>
+        </article>
+        <article class="container col-lg-8  my-2">
+            <h1>
+                Twoje Karty
+            </h1>
+            <div class="row gap-1" id="KartyGracz">
+                    
+                    
+
+            </div>
+        </article>
+        <footer id="Alerty" class="container" >
+                <!-- Alerty -->
+        <!-- Przegrana -->
+        <!-- <div class="alert alert-danger text-white alert-dismissible headShake fade show shadow" id="Alert1" role="alert">
+            <h4 class="alert-header text-danger"><strong>Przegrana!</strong> </h4>
+                Niestety przegrałeś, ale nie martw się! Następnym razem wygrasz!
+            <button type="button" class="btn-close align-left" data-bs-dismiss="alert" aria-label="Close"></button> 
+        </div>-->
+        <!-- Remis -->
+        <!-- <div class="alert alert-warning text-white alert-dismissible rubberBand fade show shadow" id="Alert1" role="alert">
+            <h4 class="alert-header text-warning"><strong>Remis!</strong> </h4>
+                Udało ci się zremisować z krupierem!
+            <button type="button" class="btn-close align-left" data-bs-dismiss="alert" aria-label="Close"></button> 
+        </div>-->
+        <!-- Wygrana -->
+        <!-- <div class="alert alert-success text-white alert-dismissible zoomIn fade show shadow" id="Alert1" role="alert">
+            <h4 class="alert-header text-success"><strong>Wygrana!</strong> </h4>
+            Udało ci się wygrać z krupierem 🤑! Gratulacje!
+            <button type="button" class="btn-close align-left" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>  -->
+        
+        </footer>
+        <footer class="autor footer my-auto py-3 ">
+            <div class="container">
+                <p class="col-2 text-center align-self-middle mx-auto">Wykonał <strong class="text-nowrap">Jan Doleziński</strong></p>
+            </div>
+          </footer>
+       
+    </main>
+    
+    <!-- <div id="Przegrana" class="Przegrana animated zoomInUp container vstack bg-secondary text-center">
+        <span class="bg-danger text-center fs-1">Game over Christopher!</span> 
+        <h1>
+            Skonczyly ci sie pieniadze i przez to ukradli ci nerki w toalecie kasyna.<br>
+            Jesli chcesz zagrac jeszcze raz wcisnij <kbd><kbd>ctrl</kbd> + <kbd>r</kbd></kbd>
+        </h1>
+        <div class="tenor-gif-embed jd15" data-postid="21670374" data-share-method="host" data-aspect-ratio="1" data-width="100%"><a href="https://tenor.com/view/crying-emoji-gif-21670374">Crying Emoji GIF</a>from <a href="https://tenor.com/search/crying+emoji-gifs">Crying Emoji GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+    </div>
+     -->
+    <!--MODAL  -->
+<div class="modal" id="Zasady">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Zasady Gry</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+            
+           <h2 class="bold">1. Cel gry:</h2>
+           <ul>
+            <li>Celem gry jest uzyskanie ręki o wartości jak najbliższej 21 punktów, ale nie więcej niż 21 punktów.
+            </li></ul>
+            <h2 class="bold">2. Wartości kart:</h2>
+            <ul>
+                <li>
+            Karty od 2 do 10 mają wartość równą ich numerowi.
+            Walet, królowa i król mają wartość 10 punktów.
+            As może mieć wartość 1 lub 11 punktów, w zależności od sytuacji.
+        </li></ul>
+            <h2 class="bold">3. Przebieg gry:</h2>
+            <ul>
+                <li> <h3>Rozdanie kart:</h3></li>
+                <ul><li>Gracze otrzymują po dwie karty na początku gry</li></ul>
+        
+                <li><h3> Decyzje gracza:</h3></li>
+               <ul><li>Gracz ma kilka opcji:</li><ul>
+                    <li>Hit (Dobranie karty): Gracz dobiera kartę, aby zwiększyć wartość swojej ręki.</li>
+                   <li> Stand (Stanie): Gracz decyduje, że nie chce dobierać już więcej kart i zostaje przy obecnej wartości ręki.
+                    <li>Double (Podwójne): Gracz podwaja swoją początkową stawkę i dobiera tylko jedną kartę.</li>
+                    <li>Split (Podział): Jeśli gracz ma dwie karty o takiej samej wartości, może podzielić je na dwie oddzielne ręce i kontynuować grę dla każdej z nich.</li>
+                
+                </ul></ul>
+           <li><h3> Ruchy krupiera:</h3></li><ul>
+           <li>Krupier dobiera karty, aby uzyskać wartość ręki 17 punktów lub więcej.</li></ul>
+        
+            <li><h3>Wynik gry:</h3></li><ul>
+                <li>Gracz wygrywa, jeśli jego ręka ma wartość bliższą 21 punktów niż ręka krupiera, ale nie więcej niż 21 punktów.</li>
+                <li>Gracz przegrywa, jeśli jego ręka przekracza 21 punktów.</li>
+                <li>W przypadku remisu, gracz odzyskuje swoją początkową stawkę.</li>
+            </ul>
+            </ul>
+                <h2 class="bold">4. Wartość ręki:</h2><ul>
+        
+            <li>Wartość ręki oblicza się dodając wartość wszystkich kart w ręce.</li></ul>
+        
+            <h2 class="bold">5. Blackjack:</h2><ul>
+        
+            <li>Blackjack to sytuacja, w której gracz otrzymuje asa i kartę o wartości 10 punktów (10, walet, królowa lub król) jako swoje dwie początkowe karty. Blackjack daje <strong> potrójną</strong> wypłatę.</li></ul>
+       
+        <span class="bold">Gra w blackjacka jest grą szczęścia i umiejętności. Pamiętaj, że zawsze graj odpowiedzialnie i kontroluj swoje zakłady. Powodzenia i miłej gry!</span>
+        </div>
+    
+        <!-- Modal footer -->
+        <div class="modal-footer vstack d-flex">
+            <label class=" mx-auto">Stronę wykonał <strong> Jan Doleziński</strong></label>
+          <button type="button" class="btn btn-danger " data-bs-dismiss="modal">Zamknij</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+           
+
+    const KartyRodzaje=["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
+    const KartyWartosc=[ 2,  3,  4,  5,  6,  7,  8,  9,  10,  10, 10, 10, 11];
+    // const KartaNiebGora='<div class="Karta col-sm-2 text-center animated fadeIn shadow rounded border border-primary text-white fs-1"><div class="vstac col-lg-6 m-auto"><span class="fw-bold col-2 " ></span><span class="fw-bold col-2 nieb">';
+    // const KartaGora='<div class="Karta col-sm-2 text-center animated fadeIn shadow rounded border border-secondary text-white fs-1"><div class="vstac col-lg-6 m-auto"><span class="fw-bold col-2 "></span><span class="fw-bold col-2 ">';
+    // const KartaDol='</span><span class="fw-bold col-2 "></span></div></div>';
+    let SumaBot=0;
+    let SumaGracz=0;
+    let Pieniadze=1000;
+    let Stawka;
+ 
+    let uzyteGracz=[];
+    let uzyteBot=[];
+    let EEEE=0; 
+    let EEEE1=0;     
+        
+        function RandomCard(){
+            let x = Math.floor(Math.random() * (13));
+            
+            return x;
+        }
+       
+        function RandomColor(){
+            let x = Math.floor(Math.random()*2);
+            
+            return x;
+        }
+        function superPomysl(){
+            hitSelf();
+            var jd=document.getElementById('Surr');
+                jd.classList.add('disabled');
+        }
+        function hitSelf(){
+            
+            let d=0;
+            
+            if(SumaGracz<21){
+            let ran=RandomCard();
+            console.log(KartyRodzaje[ran]);
+            uzyteGracz+=KartyRodzaje[ran];
+            if(ran==12&&SumaGracz>10)
+                {
+                SumaGracz+=1;
+                EEEE++;
+                }
+            else
+            {SumaGracz+=KartyWartosc[ran]*1;}
+            for(let i=0;i<uzyteGracz.length;i++){
+
+                if(uzyteGracz[i]=="A" && SumaGracz>21){
+                    console.log(d);
+                    d++;
+                    
+                }
+                if(d>EEEE){
+                    SumaGracz-=10;
+                    console.log(EEEE);
+                    EEEE++;
+                }
+
+            }
+            if(SumaGracz==21){
+                Wygrana();
+            }
+            let container=document.getElementById('KartyGracz');
+            let div = document.createElement('div');
+            div.classList.add('Karta', 'col-sm-2' ,'text-center','py-4' ,'animated' ,'fadeIn','fast' ,'shadow' ,'rounded' ,'border' ,'border-primary' ,'fs-1'); 
+            div.classList.add('animated-div');
+            if(RandomColor()==1){
+                div.classList.add('nieb','border-primary'); 
+            }
+            else{
+                div.classList.add('text-white','border-white'); 
+            }
+            
+    
+        div.textContent = KartyRodzaje[ran];
+            container.appendChild(div);
+            console.log(SumaGracz);
+            }
+            if(SumaGracz>21)
+            Przegrana();
+        }
+        function hitBotStart(){
+            let d=0;
+            
+            if(SumaBot<21){
+            let ran=RandomCard();
+            console.log(KartyRodzaje[ran]);
+            uzyteBot+=KartyRodzaje[ran];
+            if(ran==12&&SumaBot>10)
+                {SumaBot+=1;
+                EEEE1++;}
+            else
+            {SumaBot+=KartyWartosc[ran]*1;}
+            for(let i=0;i<uzyteBot.length;i++){
+
+                if(uzyteBot[i]=="A" && SumaBot>21){
+                    d++;
+                    
+                }
+                if(d>EEEE1){
+                    SumaBot-=10;
+                    EEEE1++;
+                }
+
+            }
+            
+            let container=document.getElementById('KartyBot');
+            let div = document.createElement('div');
+            div.classList.add('Karta', 'col-sm-2' ,'text-center','py-4' ,'animated' ,'fadeIn' ,'shadow' ,'rounded' ,'border' ,'fs-1'); 
+            div.classList.add('animated-div');
+            if(RandomColor()==1){
+                div.classList.add('nieb','border-primary'); 
+            }
+            else{
+                div.classList.add('text-white','border-white'); 
+            }
+    
+            div.textContent = KartyRodzaje[ran];
+            container.appendChild(div);
+            console.log(SumaBot+' B');
+            }
+        }
+        function Postaw(){
+            
+            SumaBot=0;
+            SumaGracz=0;
+            
+            document.getElementById('KartyBot').innerHTML= '';
+            document.getElementById('KartyGracz').innerHTML= '';
+            
+            let z=document.getElementById('Postawione').value;
+            Stawka=z;
+            if(Stawka>Pieniadze){
+                alert("Nie masz tyle pieniedzy!");
+                document.getElementById('Postawione').value=10;
+            }
+            else{
+            let i=0;
+            
+            if(z>=10){
+            
+            document.getElementById('Stawka').innerHTML="Stawka: "+z;
+            if(Pieniadze-z*1>-1){
+                Pieniadze-=z*1;
+               
+            }
+           
+            document.getElementById('Siano').innerHTML="Pieniadze: "+Pieniadze;
+            console.log(z);
+            console.log(Pieniadze);
+            BlokStawka();
+            Gierka();
+        }
+        else
+        alert("Postaw wiecej");
+        }
+    }
+        function Stand(){
+           BlokUsable();
+                
+                while(SumaBot<17&&SumaBot<SumaGracz){
+                
+                hitBot();
+                
+                console.log(SumaBot+' B');
+                }
+                
+                if(SumaBot==21&&SumaBot!=SumaGracz){
+                    console.log('SumaBot==21&&SumaBot!=SumaGracz');
+                    Przegrana();
+                }
+                if(SumaBot<SumaGracz){
+                Wygrana();
+                }
+                if(SumaBot>21){
+                    console.log('SumaBot>21');
+                    Wygrana();
+                }
+                if(SumaBot<21&&SumaBot>SumaGracz){
+                    console.log('SumaBot<21&&SumaBot>SumaGracz');
+                    Przegrana();
+                }
+                if(SumaBot==SumaGracz){
+                    console.log('(SumaBot==SumaGracz');
+                    Remis();
+                }
+        }
+        function Surrender(){
+            let xd30=Stawka/2;
+            Pieniadze+=xd30;
+            Przegrana();
+        }
+        
+        function BlokUsable(){
+            var jd=document.getElementById('hit1');
+                jd.classList.add('disabled');
+                jd=document.getElementById('Surr');
+                jd.classList.add('disabled');
+                jd=document.getElementById('Stand');
+                jd.classList.add('disabled');
+                jd=document.getElementById('conf');
+                jd.classList.remove('disabled');
+        }
+        function BlokStawka(){
+            let jajco15=document.getElementById('conf');
+            let i=0;
+            jajco15.classList.add('disabled');
+            let xd17=["hit1","Surr","Stand"];
+            while(i<3){
+                jajco15=document.getElementById(xd17[i]);
+                jajco15.classList.remove('disabled');
+                i++;
+            }
+        }
+        function hitBot(){
+            
+            let d=0;
+            let container=document.getElementById('KartyBot');
+            if(SumaBot<21){
+            let ran=RandomCard();
+            console.log(KartyRodzaje[ran]);
+            uzyteBot+=KartyRodzaje[ran];
+            if(ran==12&&SumaBot>10){
+                SumaBot+=1;
+                EEEE1++;
+            }
+            else
+            {SumaBot+=KartyWartosc[ran]*1;}
+            for(let i=0;i<uzyteBot.length;i++){
+
+                if(uzyteBot[i]=="A" && SumaBot>21){
+                    d++;
+                    
+                }
+                if(d>EEEE1){
+                    SumaBot-=10;
+                    EEEE1++;
+                }
+
+            }
+            let container=document.getElementById('KartyBot');
+            let div = document.createElement('div');
+            div.classList.add('Karta', 'col-sm-2' ,'text-center','py-4' ,'animated' ,'fadeIn' ,'shadow' ,'rounded' ,'border'  ,'fs-1'); 
+            div.classList.add('animated-div');
+            if(RandomColor()==1){
+                div.classList.add('nieb','border-primary'); 
+            }
+            else{
+                div.classList.add('text-white','border-white'); 
+            }
+            
+            div.textContent = KartyRodzaje[ran];
+            container.appendChild(div);
+            console.log(SumaBot+' B');
+            
+            }
+        }
+        function Przegrana(){
+            
+            if(Pieniadze<1){
+                GameOver();
+            }
+            else{
+                document.getElementById('Postawione').max=Pieniadze*1;
+           let jjjj=document.getElementById('Postawione').max;
+           console.log(jjjj);
+            console.log('Przegrana');
+            document.getElementById('Siano').innerHTML="Pieniadze: "+Pieniadze;
+            document.getElementById('Alerty').innerHTML='<div class="alert alert-danger text-white alert-dismissible animated headShake fade show shadow" id="Alert1" role="alert"><h4 class="alert-header text-danger"><strong>Przegrana!</strong> </h4> Niestety przegrałeś, ale nie martw się! Następnym razem wygrasz!<button type="button" class="btn-close align-left" data-bs-dismiss="alert" aria-label="Close"></button> </div>';
+            BlokUsable();
+            }
+        }
+        function Remis(){
+            document.getElementById('Postawione').max=Pieniadze*1;
+           let jjjj=document.getElementById('Postawione').max;
+           console.log(jjjj);
+            console.log('Remis');
+            let xd30=Stawka*1;
+            Pieniadze+=xd30;
+            document.getElementById('Siano').innerHTML="Pieniadze: "+Pieniadze;
+            document.getElementById('Alerty').innerHTML='<div class="alert alert-warning text-white alert-dismissible animated rubberBand fade show shadow" id="Alert1" role="alert"><h4 class="alert-header text-warning"><strong>Remis!</strong> </h4>Udało ci się zremisować z krupierem!<button type="button" class="btn-close align-left" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+            BlokUsable();
+
+        }
+        function Wygrana(){
+            document.getElementById('Postawione').max=Pieniadze*1;
+           let jjjj=document.getElementById('Postawione').max;
+           console.log(jjjj);
+            console.log('Wygrana');
+            if(SumaGracz==21){
+                let xd30=Stawka*3;
+                
+                Pieniadze+=xd30*1;
+            }
+            else{
+                let xd30 =Stawka*2;
+                Pieniadze+=xd30;
+            }
+            document.getElementById('Alerty').innerHTML='<div class="alert alert-success animated zoomIn text-white alert-dismissible  fade show shadow" id="Alert1" role="alert"><h4 class="alert-header text-success"><strong>Wygrana!</strong> </h4>Udało ci się wygrać z krupierem 🤑! Gratulacje!<button type="button" class="btn-close align-left" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+            document.getElementById('Siano').innerHTML="Pieniadze: "+Pieniadze;
+            BlokUsable();
+        }
+        function Gierka(){
+            uzyteBot=[];
+            uzyteGracz=[];
+           EEEE=0;
+           EEEE1=0;
+            hitBotStart();
+            hitSelf();
+            hitBotStart();
+            hitSelf();
+            if(SumaBot==21&&SumaGracz!=SumaBot){
+                Przegrana();
+            }
+            if(SumaGracz==21&&SumaBot!=SumaGracz){
+                Wygrana();
+            }
+            if(SumaGracz==21&&SumaBot==SumaGracz){
+                Remis();
+            }
+        }
+        function GameOver(){
+            let xd30=document.getElementById('aintNoWay').innerHTML="";
+            
+            let j='<div id="Przegrana" class="Przegrana animated zoomInUp container vstack bg-secondary text-center"><span class="bg-danger text-center fs-1">Game over Christopher!</span> <h1>Skonczyly ci sie pieniadze i przez to ukradli ci nerki w toalecie kasyna.<br>Jesli chcesz zagrac jeszcze raz wcisnij <kbd><kbd>ctrl</kbd> + <kbd>r</kbd></kbd></h1><img src="https://cdn.discordapp.com/attachments/801554121861103636/1160187263171432539/p9yqQx4.gif?ex=6533bf96&is=65214a96&hm=a8a38522da4627154ecb1106435e14f579039f5da3e8c2e1f462228f584219c7&" alt="😭"style=" height:500px;width:500px">';
+                
+            
+            document.getElementById('aintNoWay').innerHTML=j;
+            
+        }
+        document.getElementById('Postawione').max=Pieniadze*1;
+           let jjjj=document.getElementById('Postawione').max;
+           console.log(jjjj);
+           
+        document.getElementById('Siano').innerHTML="Pieniadze: "+Pieniadze;
+
+    // let a=1;
+    // let xd1=[];
+    // while(a<11){
+    //     console.log(a);
+    //     xd1+=a+", ";
+    //     a++;
+    // }
+    // console.log(xd1);
+</script>
+
+</html>

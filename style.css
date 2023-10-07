@@ -1,0 +1,38 @@
+img{
+    mix-blend-mode: multiply;
+}
+#Karty{
+    height: 250px;
+    
+
+}
+.nieb{
+    color: #0d6efd;
+    
+}
+.Karta{
+    
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle; 
+    margin:5px;
+   
+}
+.Przegrana{
+    display: block;
+    margin: 0 auto;
+}
+.jd15{
+height: 100%;
+width: 100%;
+}
+.invis{
+display: none;
+}
+.autor{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color:#fff;
+}
