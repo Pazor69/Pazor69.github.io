@@ -171,7 +171,7 @@
     // const KartaDol='</span><span class="fw-bold col-2 "></span></div></div>';
     let SumaBot=0;
     let SumaGracz=0;
-    let Pieniadze=1000;
+    let Pieniadze=1000*10000;
     let Stawka;
  
     let uzyteGracz=[];
@@ -450,6 +450,10 @@
 
         }
         function Wygrana(){
+            if(Pieniadze>1000000){
+                GameWon();
+            }
+            else{
             document.getElementById('Postawione').max=Pieniadze*1;
            let jjjj=document.getElementById('Postawione').max;
            console.log(jjjj);
@@ -466,6 +470,7 @@
             document.getElementById('Alerty').innerHTML='<div class="alert alert-success animated zoomIn text-white alert-dismissible  fade show shadow" id="Alert1" role="alert"><h4 class="alert-header text-success"><strong>Wygrana!</strong> </h4>Udało ci się wygrać z krupierem 🤑! Gratulacje!<button type="button" class="btn-close align-left" data-bs-dismiss="alert" aria-label="Close"></button></div>';
             document.getElementById('Siano').innerHTML="Pieniadze: "+Pieniadze;
             BlokUsable();
+        }
         }
         function Gierka(){
             uzyteBot=[];
@@ -485,6 +490,13 @@
             if(SumaGracz==21&&SumaBot==SumaGracz){
                 Remis();
             }
+        }
+        function GameWon(){
+            let xd30=document.getElementById('aintNoWay').innerHTML="";
+            let j='<div id="Przegrana" class="Przegrana animated zoomInUp container vstack bg-secondary text-center"><span class="bg-success text-center fs-1">Wygrałeś Christopher!</span> <h1>Zarobiłeś tyle siana że kupiłeś Porshambo na każdy dzień.<br>W dodatku zrobiłeś kurs jak wygrywać w kasynie, przez co twoje pieniądze tylko się mnożą!<br>Jesli chcesz zagrac jeszcze raz wcisnij <kbd><kbd>ctrl</kbd> + <kbd>r</kbd></kbd></h1><img src="https://cdn.discordapp.com/attachments/801554121861103636/1160224681534697482/HETi6OD.png?ex=6533e270&is=65216d70&hm=5e893e1c9aca5887caf540fcd9cdceebae592c49a5e36c87b0b23b929acb603e&" alt="🤑"style=" height:500px;width:500px">';
+                
+            
+                document.getElementById('aintNoWay').innerHTML=j;
         }
         function GameOver(){
             let xd30=document.getElementById('aintNoWay').innerHTML="";
